@@ -52,13 +52,11 @@ void Controller::obstacleUpdate(float dt){
 	{
 		if (currentFrameIndex % 2 == 0)
 		{
-		//	resetFrame();
 			downObstacle1();
 			upObstacle1();
 		}
 		else
 		{
-		//	resetFrame();
 			downObstacle2();
 			upObstacle2();
 		}
