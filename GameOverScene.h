@@ -9,6 +9,9 @@ public:
 
 	CREATE_FUNC(GameOverScene);
 
+	void restartEvent(Ref *pSender);
+	void returnEvent(Ref *pSender);
+
 	static Scene *createScene();
 
 private:

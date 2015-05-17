@@ -8,8 +8,8 @@ public:
 	virtual bool init();
 
 	void continueEvent(Ref *pSender);
-//	void restartEvent(Ref *pSender);
-//	void returnEvent(Ref *pSender);
+	void restartEvent(Ref *pSender);
+	void returnEvent(Ref *pSender);
 
 	static Scene *createScene();
 

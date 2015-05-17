@@ -22,7 +22,7 @@ bool Controller::init(cocos2d::Layer *layer, float positionY){
 	circle = Sprite::create("circle.png");
 	auto circleBody = PhysicsBody::createCircle(circle->getContentSize().width / 2);
 	circle->setPhysicsBody(circleBody);
-	circle->setPosition(Vec2(50, circle->getContentSize().height/2+_positionY+80));
+	circle->setPosition(Vec2(50, circle->getContentSize().height/2+positionY+80));
 	_layer->addChild(circle);
 	circle->getPhysicsBody()->setContactTestBitmask(1);
 
@@ -39,6 +39,12 @@ Controller *Controller::create(cocos2d::Layer *layer, float positionY){
 }
 
 //随机生成障碍物
+void Controller::resetFrame(){
+	currentFrameIndex = 0;
+	nextFrameCount = rand() % 100 + 50;
+}
+
+//分别生成上面和下面的障碍物
 void Controller::obstacleUpdate(float dt){
 	currentFrameIndex++;
 
@@ -46,23 +52,18 @@ void Controller::obstacleUpdate(float dt){
 	{
 		if (currentFrameIndex % 2 == 0)
 		{
-			resetFrame();
+		//	resetFrame();
 			downObstacle1();
 			upObstacle1();
 		}
 		else
 		{
-			resetFrame();
+		//	resetFrame();
 			downObstacle2();
 			upObstacle2();
 		}
+		resetFrame();
 	}
-}
-
-//生成障碍物条件
-void Controller::resetFrame(){
-	currentFrameIndex = 0;
-	nextFrameCount = rand() % 120 + 100;
 }
 
 //障碍物
@@ -97,5 +98,5 @@ bool Controller::touchPonit(Vec2 point){
 
 //触摸时使圆圈加速向上
 void Controller::onTouch(){
-	circle->getPhysicsBody()->setVelocity(Vec2(0, 200));
+	circle->getPhysicsBody()->setVelocity(Vec2(0, 250));
 }

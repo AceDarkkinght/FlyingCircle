@@ -1,10 +1,8 @@
 #include"GameWorldLayer.h"
 #include"GameOverScene.h"
 #include"PauseScene.h"
-#include"ui\UIButton.h"
 
 USING_NS_CC;
-using namespace ui;
 
 GameWorldLayer::GameWorldLayer(){
 
@@ -24,14 +22,15 @@ bool GameWorldLayer::init(){
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
 	//Ìí¼ÓÔÝÍ£°´Å¥
-	auto pauseButton = Button::create("pauseButton.png");
-	pauseButton->setAnchorPoint(Vec2(1, 1));
-	pauseButton->setPosition(Vec2(visibleSize.width, visibleSize.height));
-	addChild(pauseButton);
+	auto pause = MenuItemImage::create("pauseButton.png", "pauseButton.png", CC_CALLBACK_1(GameWorldLayer::pauseEvent,this));
+	pause->setPosition(Vec2(visibleSize.width, visibleSize.height));
+	pause->setAnchorPoint(Vec2(1, 1));
 
-	pauseButton->addTouchEventListener(this, toucheventselector(GameWorldLayer::pauseEvent));
+	auto menu = Menu::create(pause,NULL);
+	menu->setPosition(Point::ZERO);
+	addChild(menu);
 
-	//Ìí¼ÓÔ²È¦
+	//Ìí¼ÓÓÎÏ·ÔªËØ
 	controllers.insert(0, Controller::create(this, 20));
 	controllers.insert(0, Controller::create(this, visibleSize.height / 2));
 
@@ -82,7 +81,7 @@ Scene* GameWorldLayer::createScene(){
 
 	auto scene = Scene::createWithPhysics();
 //	scene->getPhysicsWorld()->setDebugDrawMask(PhysicsWorld::DEBUGDRAW_ALL);
-	scene->getPhysicsWorld()->setGravity(Vec2(0, -400)); 
+	scene->getPhysicsWorld()->setGravity(Vec2(0, -500)); 
 
 	scene->addChild(GameWorldLayer::create());
 
@@ -104,11 +103,7 @@ void GameWorldLayer::addTime(float dt){
 }
 
 //ÔÝÍ£ÓÎÏ·
-void GameWorldLayer::pauseEvent(Ref *pSender, TouchEventType type){
-	switch (type)
-	{
-	case TOUCH_EVENT_ENDED:
-		Director::getInstance()->pause();
-		break;
-	}
+void GameWorldLayer::pauseEvent(Ref *pSender){
+	auto s = pauseScene::createScene();
+	Director::getInstance()->pushScene(s);
 }

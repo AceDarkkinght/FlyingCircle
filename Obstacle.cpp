@@ -4,7 +4,7 @@ bool Obstacle::init(){
 	Sprite::init();
 
 	Size visibleSize = Director::getInstance()->getVisibleSize();
-	Size size = Size(rand() % 30 + 5, rand() % 80 + 20);
+	Size size = Size(rand() % 40 + 5, rand() % 80 + 20);
 
 	//’œ∞≠ŒÔ Ù–‘
 	setPhysicsBody(PhysicsBody::createBox(size));

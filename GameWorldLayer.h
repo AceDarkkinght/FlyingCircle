@@ -1,9 +1,7 @@
 #include"cocos2d.h"
 #include"Controller.h"
-#include"ui\UIButton.h"
 
 USING_NS_CC;
-using namespace ui;
 
 class GameWorldLayer : public LayerColor{
 
@@ -22,7 +20,7 @@ public:
 	
 	void addTime(float dt);
 
-	void pauseEvent(Ref *pSender, TouchEventType type);
+	void pauseEvent(Ref *pSender);
 
 private:
 	Vector<Controller*> controllers;

@@ -1,11 +1,9 @@
-#include"startScene.h"
+#include"StartScene.h"
 #include"GameWorldLayer.h"
-#include"ui\UIButton.h"
 
 USING_NS_CC;
-using namespace ui;
 
-bool startScene::init(){
+bool StartScene::init(){
 
 	if (!LayerColor::initWithColor(Color4B(255, 255, 255, 255)))
 	{
@@ -15,20 +13,18 @@ bool startScene::init(){
 	Size visibleSize = Director::getInstance()->getVisibleSize();
 
 	//开始游戏按钮
-	auto startButton = Button::create("startButton.png");
+	auto startButton = MenuItemImage::create("startButton.png", "startButton.png",CC_CALLBACK_1(StartScene::startEvent,this));
 	startButton->setPosition(Vec2(visibleSize.width / 2, visibleSize.height / 2));
-	addChild(startButton);
-
-	startButton->addTouchEventListener(this, toucheventselector(startScene::startEvent));
 
 
 	//关闭游戏按钮
-	auto closeButton = Button::create("closeButton.png");
+	auto closeButton = MenuItemImage::create("closeButton.png", "closeButton.png",CC_CALLBACK_1(StartScene::closeEvent,this));
 	closeButton->setAnchorPoint(Vec2(1, 1));
 	closeButton->setPosition(Vec2(visibleSize.width, visibleSize.height));
-	addChild(closeButton);
 
-	closeButton->addTouchEventListener(this, toucheventselector(startScene::closeEvent));
+	auto menu = Menu::create(startButton, closeButton,NULL);
+	menu->setPosition(Point::ZERO);
+	addChild(menu);
 
 	//游戏标题
 	auto label = Label::create("Flying Circle", "fonts/Marker Felt.ttf", 40);
@@ -39,33 +35,23 @@ bool startScene::init(){
 	return true;
 }
 
-Scene* startScene::createScene(){
+Scene* StartScene::createScene(){
 
 	auto scene = Scene::create();
-	scene->addChild(startScene::create());
+	scene->addChild(StartScene::create());
 
 	return scene;
 }
 
 //开始游戏
-void startScene::startEvent(Ref *pSender, TouchEventType type){
+void StartScene::startEvent(Ref *pSender){
 
 	auto scene = GameWorldLayer::createScene();
+	Director::getInstance()->replaceScene(scene);
 
-	switch (type)
-	{
-	case TOUCH_EVENT_ENDED:
-		Director::getInstance()->replaceScene(scene);
-		break;
-	}
 }
 
 //关闭游戏
-void startScene::closeEvent(cocos2d::Ref *pSender, TouchEventType type){
-	switch (type)
-	{
-	case TOUCH_EVENT_BEGAN:
-		Director::getInstance()->end();
-		break;
-	}
+void StartScene::closeEvent(cocos2d::Ref *pSender){
+	Director::getInstance()->end();
 }
